@@ -123,7 +123,6 @@ app.addEventListener("click", (e) => {
 })
 
 next.addEventListener("click", (e) => {
-    console.log("das");
     computeNextBoardGoL(2, currentBoard, nextBoard);
     [currentBoard, nextBoard] = [nextBoard, currentBoard]; 
     render(contx, currentBoard);
