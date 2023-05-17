@@ -46,6 +46,30 @@ function countNbrs(board, nbrs, r0, c0) {
         }
     }
 }
+const GoL = [
+    [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ],
+    [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ],
+];
 function computeNextBoardGoL(states, current, next) {
     const DEAD = 0;
     const ALIVE = 1;
@@ -53,24 +77,7 @@ function computeNextBoardGoL(states, current, next) {
     for (let r = 0; r < BOARD_ROWS; ++r) {
         for (let c = 0; c < BOARD_COLS; ++c) {
             countNbrs(current, nbrs, r, c);
-            switch (current[r][c]) {
-                case DEAD:
-                    if (nbrs[ALIVE] == 3) {
-                        next[r][c] = ALIVE;
-                    }
-                    else {
-                        next[r][c] = DEAD;
-                    }
-                    break;
-                case ALIVE:
-                    if (nbrs[ALIVE] == 2 || nbrs[ALIVE] == 3) {
-                        next[r][c] = ALIVE;
-                    }
-                    else {
-                        next[r][c] = DEAD;
-                    }
-                    break;
-            }
+            next[r][c] = GoL[current[r][c]][nbrs[DEAD]][nbrs[ALIVE]];
         }
     }
 }
@@ -88,10 +95,16 @@ function render(contx, board) {
     }
 }
 app.addEventListener("click", (e) => {
+    const state = document.getElementsByName("state");
     const col = Math.floor(e.offsetX / CELL_WIDTH);
     const row = Math.floor(e.offsetY / CELL_HEIGHT);
-    currentBoard[row][col] = 1;
-    render(contx, currentBoard);
+    for (let i = 0; i < state.length; ++i) {
+        if (state[i].checked) {
+            currentBoard[row][col] = i;
+            render(contx, currentBoard);
+        }
+    }
+    return;
 });
 next.addEventListener("click", (e) => {
     console.log("das");

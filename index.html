@@ -10,12 +10,15 @@
 
   <body>
     <p><button id="next">Next</button></p>
-
+    <fieldset>
+      <legend>State:</legend>
+      <input type="radio" name="state" id="dead" value="dead" >
+      <label for="dead">dead</label>
+      <input type="radio" name="state" id="alive" value="alive" checked>
+      <label for="alive">alive</label>
+    </fieldset>
     <canvas id="app">
     </canvas>
-
-   
-
     <script src="index.js"></script>
   </body>
 </html>
